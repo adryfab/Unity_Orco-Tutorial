@@ -10,20 +10,60 @@ public class ControladorPersonaje : MonoBehaviour
     public Slider slider;
     public Text txt;
     public float energy = 100f;
+    public int costoGolpeAlAire = 1;
+    public int costoGolpeAlArbol = 3;
+    public int premioArbol = 15;
+    public GameObject hacha = null;
 
     Rigidbody2D rgb;
     Animator anim;
     bool haciaDerecha = true;
+    ControlArbol crtArbol = null;
+    bool enFire = false;
 
 	// Use this for initialization
 	void Start ()
     {
         rgb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        energy = 100;
+        hacha = GameObject.Find("/orc/orc_body/orc _R_arm/orc _R_hand/orc_weapon");
     }
 
     private void Update()
     {
+        if (Mathf.Abs(Input.GetAxis("Fire1")) > 0.01f)
+        {
+            if (enFire == false)
+            {
+                enFire = true;
+                hacha.GetComponent<CircleCollider2D>().enabled = false;
+                anim.SetTrigger("attack");
+                if (crtArbol != null)
+                {
+                     if (crtArbol.GolpeOrco()==true)
+                    {
+                        energy += premioArbol;
+                        if (energy > 100)
+                        {
+                            energy = 100;
+                        }
+                    }
+                    else
+                    {
+                        energy -= costoGolpeAlArbol;
+                    }
+                }
+                else
+                {
+                    energy -= costoGolpeAlAire;
+                }
+            }
+            else
+            {
+                enFire = false;
+            }
+        }
         slider.value = energy;
         txt.text = energy.ToString();
     }
@@ -59,5 +99,15 @@ public class ControladorPersonaje : MonoBehaviour
         var s = transform.localScale;
         s.x *= -1;
         transform.localScale = s;
+    }
+
+    public void SetControlArbol(ControlArbol crt)
+    {
+        crtArbol = crt;
+    }
+
+    public void HabilitarTriggerHacha()
+    {
+        hacha.GetComponent<CircleCollider2D>().enabled = true;
     }
 }
