@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ControladorPersonaje : MonoBehaviour
 {
+    public float maxVel = 5f;
+    public float jump = 1f;
+
     Rigidbody2D rgb;
     Animator anim;
-    public float maxVel = 5f;
     bool haciaDerecha = true;
 
 	// Use this for initialization
@@ -15,25 +17,30 @@ public class ControladorPersonaje : MonoBehaviour
         rgb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
-	
-	void FixedUpdate ()
+
+    void FixedUpdate()
     {
         float v = Input.GetAxis("Horizontal");
         Vector2 vel = new Vector2(0, rgb.velocity.y);
         v *= maxVel;
         vel.x = v;
         rgb.velocity = vel;
-        anim.SetFloat("speed", vel.x);
+        //anim.SetFloat("speed", vel.x);
 
-        if (haciaDerecha = true && v < 0)
+        //if (haciaDerecha = true && v < 0)
+        //{
+        //    haciaDerecha = false;
+        //    Flip();
+        //}
+        //else if (haciaDerecha = false && v > 0)
+        //{
+        //    haciaDerecha = true;
+        //    Flip();
+        //}
+
+        if (Input.GetAxis("Jump")>0)
         {
-            haciaDerecha = false;
-            Flip();
-        }
-        else if (haciaDerecha = false && v > 0)
-        {
-            haciaDerecha = true;
-                Flip();
+            rgb.AddForce(new Vector2(0, jump), ForceMode2D.Impulse);
         }
     }
 
