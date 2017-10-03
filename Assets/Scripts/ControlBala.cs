@@ -32,6 +32,14 @@ public class ControlBala : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.name.Equals("arbol"))
+        {
+            ControlArbol ctr = collision.gameObject.GetComponent<ControlArbol>();
+            if (ctr != null)
+            {
+                ctr.RecibirDisparo();
+                Destroy(gameObject);
+            }
+        }
     }
 }
