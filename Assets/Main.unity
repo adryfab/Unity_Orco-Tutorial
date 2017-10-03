@@ -199,7 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVel: 5
-  jump: 1
   slider: {fileID: 66264023}
   txt: {fileID: 2005756917}
   energy: 100
@@ -207,6 +206,9 @@ MonoBehaviour:
   costoGolpeAlArbol: 3
   premioArbol: 15
   hacha: {fileID: 0}
+  jumping: 0
+  yJumpForce: 100
+  jump: 1
 --- !u!50 &12749419
 Rigidbody2D:
   serializedVersion: 4

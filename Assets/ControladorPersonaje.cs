@@ -5,29 +5,39 @@ using UnityEngine.UI;
 
 public class ControladorPersonaje : MonoBehaviour
 {
+    Rigidbody2D rgb;
+    Animator anim;
     public float maxVel = 5f;
-    public float jump = 1f;
+    bool haciaDerecha = true;
     public Slider slider;
     public Text txt;
     public float energy = 100f;
+
     public int costoGolpeAlAire = 1;
     public int costoGolpeAlArbol = 3;
     public int premioArbol = 15;
-    public GameObject hacha = null;
 
-    Rigidbody2D rgb;
-    Animator anim;
-    bool haciaDerecha = true;
-    ControlArbol crtArbol = null;
     bool enFire = false;
 
+    ControlArbol crtArbol = null;
+    public GameObject hacha = null;
+
+    public bool jumping = false;
+    public float yJumpForce = 300;
+    Vector2 jumpForce;
+
+    public float jump = 1f;
+
+    
 	// Use this for initialization
 	void Start ()
     {
         rgb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        energy = 100;
         hacha = GameObject.Find("/orc/orc_body/orc _R_arm/orc _R_hand/orc_weapon");
+        energy = 100;
+
+        jumpForce = new Vector2(0, 0);
     }
 
     private void Update()
@@ -75,6 +85,7 @@ public class ControladorPersonaje : MonoBehaviour
         v *= maxVel;
         vel.x = v;
         rgb.velocity = vel;
+
         //anim.SetFloat("speed", vel.x);
 
         //if (haciaDerecha = true && v < 0)
@@ -90,7 +101,16 @@ public class ControladorPersonaje : MonoBehaviour
 
         if (Input.GetAxis("Jump")>0)
         {
-            rgb.AddForce(new Vector2(0, jump), ForceMode2D.Impulse);
+            //rgb.AddForce(new Vector2(0, jump), ForceMode2D.Impulse);
+            if (!jumping)
+            {
+                jumping = true;
+                jumpForce.x = 0f;
+                jumpForce.y = yJumpForce;
+                rgb.AddForce(jumpForce);
+            }
+            else
+                jumping = false;
         }
     }
 
