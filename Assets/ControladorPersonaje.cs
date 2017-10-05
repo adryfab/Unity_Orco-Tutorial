@@ -12,7 +12,7 @@ public class ControladorPersonaje : MonoBehaviour
     public Slider slider;
     public Text txt;
     public float energy = 100f;
-
+    
     public int costoGolpeAlAire = 1;
     public int costoGolpeAlArbol = 3;
     public int premioArbol = 15;
@@ -28,9 +28,10 @@ public class ControladorPersonaje : MonoBehaviour
 
     public float jump = 1f;
 
-    
-	// Use this for initialization
-	void Start ()
+    public float costoBala = 3f;
+
+    // Use this for initialization
+    void Start ()
     {
         rgb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -42,6 +43,19 @@ public class ControladorPersonaje : MonoBehaviour
 
     private void Update()
     {
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("muriendo"))
+        {
+            if (energy <= 0)
+            {
+                energy = 0;
+                anim.SetTrigger("morir");
+            }
+            else
+            {
+                return;
+            }
+        }
+
         if (Mathf.Abs(Input.GetAxis("Fire1")) > 0.01f)
         {
             if (enFire == false)
@@ -129,5 +143,9 @@ public class ControladorPersonaje : MonoBehaviour
     public void HabilitarTriggerHacha()
     {
         hacha.GetComponent<CircleCollider2D>().enabled = true;
+    }
+
+    public void RecibirBala() {
+        energy -= costoBala;
     }
 }

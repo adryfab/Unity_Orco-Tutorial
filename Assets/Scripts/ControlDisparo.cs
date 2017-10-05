@@ -19,6 +19,11 @@ public class ControlDisparo : MonoBehaviour {
         {
             DecidaSiDispara(collision);
         }
+        if (collision.gameObject.name.Equals("orc") && disparandoA == null)
+        {
+            Disparar();
+            disparandoA = collision;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
