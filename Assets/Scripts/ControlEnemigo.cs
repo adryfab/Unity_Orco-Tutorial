@@ -82,4 +82,9 @@ public class ControlEnemigo : MonoBehaviour
 
         energy--;
     }
+
+    public void BajarPuntosPorOrcoCerca()
+    {
+        energy--;
+    }
 }
