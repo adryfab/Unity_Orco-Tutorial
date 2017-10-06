@@ -34,7 +34,8 @@ public class RetroalimentacionEnergia : MonoBehaviour {
         myTransform.Translate(paso);
     }
 
-    private Rect CalcularRectanguloMensaje() {
+    private Rect CalcularRectanguloMensaje()
+    {
         Vector2 position = Camera.main.WorldToScreenPoint(myTransform.position);
         Rect rectanguloMensaje = new Rect(position.x - 50, Screen.height - position.y, 100, 30);
         return rectanguloMensaje;

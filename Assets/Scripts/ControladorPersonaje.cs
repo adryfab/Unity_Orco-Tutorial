@@ -8,14 +8,17 @@ public class ControladorPersonaje : MonoBehaviour
     Rigidbody2D rgb;
     Animator anim;
     public float maxVel = 5f;
-    bool haciaDerecha = true;
+    //bool haciaDerecha = true;
     public Slider slider;
     public Text txt;
     public float energy = 100f;
-    
+    public GameObject retroalimentacionEnergiaPrefab;
+    Transform retroalimentacionSpawnPoint;
+
     public int costoGolpeAlAire = 1;
     public int costoGolpeAlArbol = 3;
     public int premioArbol = 15;
+    public int costoBala = 3;
 
     bool enFire = false;
 
@@ -28,7 +31,6 @@ public class ControladorPersonaje : MonoBehaviour
 
     public float jump = 1f;
 
-    public float costoBala = 3f;
     public bool isOnTheFloor = false;
 
     // Use this for initialization
@@ -38,8 +40,8 @@ public class ControladorPersonaje : MonoBehaviour
         anim = GetComponent<Animator>();
         hacha = GameObject.Find("/orc/orc_body/orc _R_arm/orc _R_hand/orc_weapon");
         energy = 100;
-
         jumpForce = new Vector2(0, 0);
+        retroalimentacionSpawnPoint = GameObject.Find("spawnPoint").transform;
     }
 
     private void Update()
@@ -69,6 +71,7 @@ public class ControladorPersonaje : MonoBehaviour
                      if (crtArbol.GolpeOrco()==true)
                     {
                         energy += premioArbol;
+                        InstanciarRetroalimentacionEnergia(premioArbol);
                         if (energy > 100)
                         {
                             energy = 100;
@@ -77,11 +80,13 @@ public class ControladorPersonaje : MonoBehaviour
                     else
                     {
                         energy -= costoGolpeAlArbol;
+                        InstanciarRetroalimentacionEnergia(costoGolpeAlArbol);
                     }
                 }
                 else
                 {
                     energy -= costoGolpeAlAire;
+                    InstanciarRetroalimentacionEnergia(costoGolpeAlAire);
                 }
             }
             else
@@ -138,5 +143,23 @@ public class ControladorPersonaje : MonoBehaviour
 
     public void RecibirBala() {
         energy -= costoBala;
+        InstanciarRetroalimentacionEnergia(costoBala);
     }
+
+    private void InstanciarRetroalimentacionEnergia(int incremento)
+    {
+        GameObject retroalimentcionGO = null;
+        if (retroalimentacionSpawnPoint != null)
+        {
+            retroalimentcionGO = (GameObject)Instantiate(retroalimentacionEnergiaPrefab, retroalimentacionSpawnPoint.position, 
+                retroalimentacionSpawnPoint.rotation);
+        }
+        else
+        {
+            retroalimentcionGO = (GameObject)Instantiate(retroalimentacionEnergiaPrefab, transform.position, transform.rotation);
+        }
+
+        retroalimentcionGO.GetComponent<RetroalimentacionEnergia>().cantidadCambiodeEnergia = incremento;
+    }
+
 }

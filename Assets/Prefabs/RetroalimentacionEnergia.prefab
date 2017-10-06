@@ -44,7 +44,7 @@ MonoBehaviour:
   velocidad: 0.5
   cantidadCambiodeEnergia: 0
   estiloDeTexto:
-    m_Name: 
+    m_Name: X
     m_Normal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
@@ -97,7 +97,7 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-    m_Font: {fileID: 0}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 30
     m_FontStyle: 1
     m_Alignment: 4
