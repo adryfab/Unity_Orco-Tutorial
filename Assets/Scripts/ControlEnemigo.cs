@@ -71,7 +71,7 @@ public class ControlEnemigo : MonoBehaviour
 
     public void Disparar()
     {
-        anim.SetTrigger("apuntar");
+        anim.SetTrigger("Apuntar");
     }
 
     public void EmitirBala()

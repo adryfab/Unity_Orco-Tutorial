@@ -29,6 +29,7 @@ public class ControladorPersonaje : MonoBehaviour
     public float jump = 1f;
 
     public float costoBala = 3f;
+    public bool isOnTheFloor = false;
 
     // Use this for initialization
     void Start ()
@@ -100,23 +101,13 @@ public class ControladorPersonaje : MonoBehaviour
         vel.x = v;
         rgb.velocity = vel;
 
-        //anim.SetFloat("speed", vel.x);
-
-        //if (haciaDerecha = true && v < 0)
-        //{
-        //    haciaDerecha = false;
-        //    Flip();
-        //}
-        //else if (haciaDerecha = false && v > 0)
-        //{
-        //    haciaDerecha = true;
-        //    Flip();
-        //}
+        // Nueva variable agregada para corregir el error del salto infinito
+        isOnTheFloor = rgb.velocity.y == 0;
 
         if (Input.GetAxis("Jump")>0)
         {
-            //rgb.AddForce(new Vector2(0, jump), ForceMode2D.Impulse);
-            if (!jumping)
+            // ahora solo puede saltar si la velocidad del RGB es 0 en su componente 'y' es decir que no este cayendo o subiendo.
+            if (!jumping && isOnTheFloor)
             {
                 jumping = true;
                 jumpForce.x = 0f;

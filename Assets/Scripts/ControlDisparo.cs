@@ -10,7 +10,7 @@ public class ControlDisparo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ctr = GameObject.Find("enemigo").GetComponent<ControlEnemigo>();
+        ctr = GameObject.Find("Enemigo").GetComponent<ControlEnemigo>();
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)

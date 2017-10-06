@@ -307,9 +307,10 @@ MonoBehaviour:
   premioArbol: 15
   hacha: {fileID: 0}
   jumping: 0
-  yJumpForce: 100
+  yJumpForce: 300
   jump: 1
   costoBala: 3
+  isOnTheFloor: 0
 --- !u!50 &12749419
 Rigidbody2D:
   serializedVersion: 4
